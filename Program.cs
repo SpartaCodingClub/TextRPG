@@ -2,9 +2,21 @@
 {
     internal class Program
     {
-        static void Main(string[] args)
-        {
+        public static Field_Base CurrentField = new Field_Title();
+        public static Player Player = new();
 
+        public static string Nickname = string.Empty;
+
+        static void Main()
+        {
+            while (true)
+            {
+                CurrentField.Start();
+                if (CurrentField.Update() < 0)
+                {
+                    break;
+                }
+            }
         }
     }
 }
