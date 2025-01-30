@@ -111,6 +111,7 @@
             if (player.Stats.HP <= 0)
             {
                 Utils.WriteColorLine(" [!] GAME OVER! 게임이 종료되었습니다.", ConsoleColor.Red);
+                Utils.ClearBuffer();
                 return -1;
             }
 

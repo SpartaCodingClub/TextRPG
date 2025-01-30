@@ -52,14 +52,6 @@
             Console.WriteLine($"{info}\n");
         }
 
-        protected static void ShowInventoryTitle()
-        {
-            List<Item> inventory = Program.Player.Inventory;
-            Console.Write(" [아이템 목록 ");
-            Utils.WriteColor($"({inventory.Count}/{inventory.Capacity})", ConsoleColor.DarkGray);
-            Console.WriteLine("]");
-        }
-
         protected static void ShowPlayerInfo()
         {
             Player player = Program.Player;
@@ -83,7 +75,7 @@
             Console.WriteLine();
 
             Console.Write(" 보유금: ");
-            Utils.WriteColorLine($"{stats.Gold}G\n", ConsoleColor.Yellow);
+            Utils.WriteColorLine($"{stats.Gold:N0}G\n", ConsoleColor.Yellow);
         }
 
         protected static void ShowStatsInfo(string label, int value, int itemValue = 0)

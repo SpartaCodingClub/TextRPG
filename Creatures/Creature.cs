@@ -43,7 +43,7 @@
             stats.LV = Math.Max(stats.LV, 1);
             stats.Name ??= Program.Nickname;
             stats.MaxHP = stats.HP;
-            stats.MaxEXP = Define.MAX_EXP[stats.LV - 1];
+            stats.MaxEXP = stats.LV > Define.MAX_EXP.Length ? 0 : Define.MAX_EXP[stats.LV - 1];
 
             Stats = stats;
         }

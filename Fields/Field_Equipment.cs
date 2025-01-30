@@ -42,7 +42,7 @@
         protected override void ShowInfo()
         {
             base.ShowInfo();
-            ShowInventoryTitle();
+            Console.WriteLine(" [아이템 목록]");
 
             if (inventory.Count > 0)
             {

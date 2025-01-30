@@ -10,8 +10,7 @@
             new() { ATK = 5, DEF = 10, HP = 120, Gold = 1500 },
             new() { ATK = 8, DEF = 8, HP = 80, Gold = 1500 }
         };
-        //public static readonly int[] MAX_EXP = { 2, 4, 8, 16, 32, 64, 128, 256, 512 };
-        public static readonly int[] MAX_EXP = { 1, 1, 1, 1, 1, 1, 1, 1, 1 }; // TODO: TEST CODE;
+        public static readonly int[] MAX_EXP = { 1, 2, 3, 5, 8, 13, 21, 34, 55 };
         #endregion
         #region Fields
         public static readonly string FIELD_TITLE_TITLE = " 스파르타 전사 키우기";
@@ -56,6 +55,7 @@
         #endregion
         #region Errors
         public static readonly string ERROR_MESSAGE_INPUT = "[!] 잘못된 입력입니다.";
+        public static readonly string ERROR_MESSAGE_DATA = "[!] 저장된 데이터가 없습니다.";
         public static readonly string ERROR_MESSAGE_CAPACITY = "[!] 인벤토리가 가득 찼습니다.";
         public static readonly string ERROR_MESSAGE_PURCHASE = "[!] 골드가 부족합니다.";
         public static readonly string ERROR_MESSAGE_PURCHASED = "[!] 이미 구매한 아이템입니다.";

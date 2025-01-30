@@ -85,7 +85,7 @@
                 Utils.WriteColor($"{dungeon.EXP}의 경험치와 ", ConsoleColor.Green);
             }
 
-            Utils.WriteColorLine($"{gold}의 골드를 획득했습니다.", ConsoleColor.Green);
+            Utils.WriteColorLine($"{gold:N0}G의 골드를 획득했습니다.", ConsoleColor.Green);
             (int left, int top) = Console.GetCursorPosition();
 
             // 경험치 증가
@@ -124,9 +124,9 @@
 
                 Utils.ClearLine(CURSOR_GOLD_LEFT, CURSOR_GOLD_TOP);
                 Console.SetCursorPosition(CURSOR_GOLD_LEFT, CURSOR_GOLD_TOP);
-                Utils.WriteColor($"{currentGold}G", ConsoleColor.Yellow);
+                Utils.WriteColor($"{currentGold:N0}G", ConsoleColor.Yellow);
                 Utils.WriteColor(" -> ", ConsoleColor.DarkYellow);
-                Utils.WriteColor($"{stats.Gold}G", ConsoleColor.Green);
+                Utils.WriteColor($"{stats.Gold:N0}G", ConsoleColor.Green);
                 Thread.Sleep(20);
             }
 

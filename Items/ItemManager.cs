@@ -14,9 +14,7 @@
             ItemList.Add(new(ItemType.Weapon, PlayerType.Common, "스파르타의 창\t", "스파르타의 전사들이 사용했다는 전설의 창입니다.\t", 2700, atk: 7));
             ItemList.Add(new(ItemType.Weapon, PlayerType.Mage, "강철 메이스\t\t", "[힘법사 전용] 공수에 모두 뛰어난 메이스입니다.\t", 20000, atk: 8, def: 8));
 
-            ItemList.Add(new(ItemType.Jewelry, PlayerType.Common, "결혼 반지\t\t", "누군가의 결혼을 기념한 반지입니다.\t\t\t", 1004, def: 1, hp: 100));
-            ItemList.Add(new(ItemType.Jewelry, PlayerType.Common, "이혼 반지\t\t", "누군가의 분노가 느껴지는 반지입니다.\t\t\t", 20000, atk: 4, hp: 100));
-            ItemList.Add(new(ItemType.Jewelry, PlayerType.Common, "칠 반지\t\t", "Chill한 보호 주문이 깃든 반지입니다.\t\t\t", 77777, def: 7, hp: 777));
+            ItemList.Add(new(ItemType.Jewelry, PlayerType.Common, "칠 반지\t\t", "Chill한 보호 주문이 깃든 반지입니다.\t\t\t", 7777, def: 7, hp: 777));
         }
 
         public static readonly ItemManager Instance = new();

@@ -34,7 +34,11 @@
                     default:
                         Item item = itemList[index - 1];
                         if (item.Purchase() == false) continue;
-                        Program.Player.Inventory.Add(item);
+                        ItemStatus status = item.Status;
+                        status.IsPurchased = false;
+                        Item newItem = new() { Stats = item.Stats, Status = status };
+                        Program.Player.Inventory.Add(newItem);
+                        Update();
                         return 0;
                 }
             }

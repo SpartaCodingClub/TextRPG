@@ -13,6 +13,8 @@
             menu.Add("던전 입장");
             menu.Add("여관 입장");
             menu.Add("게임 종료");
+
+            DataManager.Instance.SaveData();
         }
 
         public override int Update()

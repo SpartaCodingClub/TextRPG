@@ -26,7 +26,7 @@
 
             foreach (var item in Inventory)
             {
-                if (item.Stats.IsEquipped == false)
+                if (item.Status.IsEquipped == false)
                 {
                     continue;
                 }

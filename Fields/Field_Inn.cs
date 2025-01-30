@@ -75,7 +75,7 @@
             Console.SetCursorPosition(left, top);
             Console.Write("체력이 회복되었습니다! ");
             Utils.WriteColorLine($"-{PRICE}G", ConsoleColor.DarkRed);
-            Console.ReadKey(true);
+            Update();
 
             return true;
         }

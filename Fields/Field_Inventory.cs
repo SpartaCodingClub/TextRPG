@@ -29,7 +29,7 @@
         protected override void ShowInfo()
         {
             base.ShowInfo();
-            ShowInventoryTitle();
+            Console.WriteLine(" [아이템 목록]");
 
             var inventory = Program.Player.Inventory;
             if (inventory.Count > 0)

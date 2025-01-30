@@ -13,17 +13,19 @@
 
         public override int Update()
         {
-            switch (base.Update())
+            while (true)
             {
-                case 1:
-                    Program.CurrentField = new Field_PlayerName();
-                    break;
-                case 2:
-                    // TODO: 추가 과제 - 데이터 로드 구현하기
-                    break;
+                switch (base.Update())
+                {
+                    case 1:
+                        Program.CurrentField = new Field_PlayerName();
+                        return 0;
+                    case 2:
+                        if (DataManager.Instance.LoadData() == false) continue;
+                        Program.CurrentField = new Field_Lobby();
+                        return 0;
+                }
             }
-
-            return 0;
         }
     }
 }

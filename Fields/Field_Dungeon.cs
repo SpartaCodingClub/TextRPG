@@ -29,6 +29,8 @@
             }
 
             menu.Add("나가기");
+
+            DataManager.Instance.SaveData();
         }
 
         public override int Update()
