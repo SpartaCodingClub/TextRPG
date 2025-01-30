@@ -1,21 +1,47 @@
 ﻿namespace TextRPG
 {
+    public enum ItemType
+    {
+        Weapon,
+        Armor,
+        Jewelry
+    }
+
     public struct ItemStats
     {
-        public bool IsEquipment;
+        public ItemStats(ItemStats stats)
+        {
+            RequiredType = stats.RequiredType;
+
+            IsEquipped = stats.IsEquipped;
+            IsPurchased = stats.IsPurchased;
+
+            Name = stats.Name;
+            Description = stats.Description;
+
+            ATK = stats.ATK;
+            DEF = stats.DEF;
+            MaxHP = stats.MaxHP;
+            Gold = stats.Gold;
+        }
+
+        public static ItemStats operator +(ItemStats a, ItemStats b)
+        {
+            return new() { ATK = a.ATK + b.ATK, DEF = a.DEF + b.DEF, MaxHP = a.MaxHP + b.MaxHP };
+        }
+
+        public PlayerType RequiredType;
+
+        public bool IsEquipped;
+        public bool IsPurchased;
 
         public string Name;
         public string Description;
 
         public int ATK;
         public int DEF;
-        public int HP;
+        public int MaxHP;
         public int Gold;
-
-        public static ItemStats operator +(ItemStats a, ItemStats b)
-        {
-            return new() { ATK = a.ATK + b.ATK, DEF = a.DEF + b.DEF, HP = a.HP + b.HP };
-        }
     }
 
     internal class Item
@@ -23,30 +49,115 @@
         private static readonly int CURSOR_LEFT = 24;
         private static readonly int CURSOR_RIGHT = 40;
 
-        public Item(string name, string description, int gold, int atk = 0, int def = 0, int hp = 0)
+        public ItemType Type { get; set; }
+
+        public Item() { }
+
+        public Item(ItemType type, PlayerType requiredType, string name, string description, int gold, int atk = 0, int def = 0, int hp = 0)
         {
             Stats = new()
             {
+                RequiredType = requiredType,
                 Name = name,
                 Description = description,
                 ATK = atk,
                 DEF = def,
-                HP = hp,
+                MaxHP = hp,
                 Gold = gold
             };
+
+            Type = type;
         }
 
-        public ItemStats Stats { get; private set; }
+        public ItemStats Stats { get; set; }
 
         private int cursorTop;
         private int offset;
 
-        public void Equipment()
+        public bool Equipment()
         {
-            // TODO: 여기부터
+            Player player = Program.Player;
+            if (Stats.RequiredType != player.Type && Stats.RequiredType != PlayerType.Common)
+            {
+                Console.WriteLine(Define.ERROR_MESSAGE_REQUIRED);
+                return false;
+            }
+
+            foreach (var item in player.Inventory)
+            {
+                if (item == this)
+                {
+                    continue;
+                }
+
+                if (item.Type != Type)
+                {
+                    continue;
+                }
+
+                if (item.Stats.IsEquipped)
+                {
+                    item.Equipment();
+                }
+            }
+
+            ItemStats newStats = Stats;
+            newStats.IsEquipped = !newStats.IsEquipped;
+            Stats = newStats;
+
+            return true;
         }
 
-        public void ShowInfo(int index = 0, bool showGold = false)
+        public bool Purchase()
+        {
+            if (Stats.IsPurchased)
+            {
+                Console.WriteLine(Define.ERROR_MESSAGE_PURCHASED);
+                return false;
+            }
+
+            CreatureStats stats = Program.Player.Stats;
+            if (Stats.Gold > stats.Gold)
+            {
+                Console.WriteLine(Define.ERROR_MESSAGE_PURCHASE);
+                return false;
+            }
+
+            List<Item> inventory = Program.Player.Inventory;
+            if (inventory.Count == inventory.Capacity)
+            {
+                Console.WriteLine(Define.ERROR_MESSAGE_CAPACITY);
+                return false;
+            }
+
+            stats.Gold -= Stats.Gold;
+            Program.Player.Stats = stats;
+
+            ItemStats newItemStats = Stats;
+            newItemStats.IsPurchased = !newItemStats.IsPurchased;
+            Stats = newItemStats;
+
+            Console.Write("구매를 완료했습니다! ");
+            Utils.WriteColorLine($"-{Stats.Gold}G", ConsoleColor.DarkRed);
+            Console.ReadKey(true);
+
+            return true;
+        }
+
+        public void Sale()
+        {
+            int price = (int)(Stats.Gold * 0.85f);
+
+            CreatureStats newStats = Program.Player.Stats;
+            newStats.Gold += price;
+            Program.Player.Stats = newStats;
+
+            Console.Write("판매를 완료했습니다! ");
+            Utils.WriteColorLine($"+{price}G", ConsoleColor.Yellow);
+            Console.ReadKey(true);
+        }
+
+        public void ShowInfo(bool showEquip, bool showGold, int index = 0)
         {
             cursorTop = int.MaxValue;
             offset = 0;
@@ -60,26 +171,26 @@
                 Utils.WriteColor("  -  ", ConsoleColor.DarkYellow);
             }
 
-            if (Stats.IsEquipment)
+            if (showEquip && Stats.IsEquipped)
             {
-                Console.Write("[E] ");
+                Utils.WriteColor("[E]", ConsoleColor.DarkGray);
             }
 
             Console.Write(Stats.Name);
 
             if (Stats.ATK > 0)
             {
-                ShowStats("공격력", Stats.ATK);
+                ShowStatsInfo("공격력", Stats.ATK);
             }
 
             if (Stats.DEF > 0)
             {
-                ShowStats("방어력", Stats.DEF);
+                ShowStatsInfo("방어력", Stats.DEF);
             }
 
-            if (Stats.HP > 0)
+            if (Stats.MaxHP > 0)
             {
-                ShowStats("체  력", Stats.DEF);
+                ShowStatsInfo("체  력", Stats.MaxHP);
             }
 
             Console.SetCursorPosition(CURSOR_RIGHT, cursorTop);
@@ -89,13 +200,21 @@
             if (showGold)
             {
                 Utils.WriteColor(" | ", ConsoleColor.DarkYellow);
-                Utils.WriteColor($"{Stats.Gold}G", ConsoleColor.Yellow);
+
+                if (Stats.IsPurchased)
+                {
+                    Utils.WriteColor($"구매완료", ConsoleColor.DarkGray);
+                }
+                else
+                {
+                    Utils.WriteColor($"{Stats.Gold:N0}G", ConsoleColor.Yellow);
+                }
             }
 
             Console.SetCursorPosition(0, cursorTop + offset);
         }
 
-        private void ShowStats(string label, int value)
+        private void ShowStatsInfo(string label, int value)
         {
             cursorTop = Math.Min(Console.CursorTop, cursorTop);
 

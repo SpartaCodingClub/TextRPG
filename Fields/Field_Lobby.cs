@@ -10,6 +10,8 @@
             menu.Add("상태 보기");
             menu.Add("인벤토리");
             menu.Add("상점");
+            menu.Add("던전 입장");
+            menu.Add("여관 입장");
             menu.Add("게임 종료");
         }
 
@@ -24,9 +26,16 @@
                     Program.CurrentField = new Field_Inventory();
                     break;
                 case 3:
-                    // TODO: 상점 구현하기
+                    Program.CurrentField = new Field_Shop();
                     break;
                 case 4:
+                    Program.CurrentField = new Field_Dungeon();
+                    break;
+                case 5:
+                    Program.CurrentField = new Field_Inn();
+                    break;
+                case 6:
+                    Console.WriteLine("게임이 종료되었습니다.");
                     return -1;
             }
 

@@ -1,11 +1,11 @@
 ﻿namespace TextRPG
 {
-    internal class Field_Equipment : Field_Base
+    internal class Field_Sale : Field_Base
     {
-        public Field_Equipment()
+        public Field_Sale()
         {
-            title = Define.FIELD_EQUIPMENT_TITLE;
-            info = Define.FIELD_INVENTORY_INFO;
+            title = Define.FIELD_SALE_TITLE;
+            info = Define.FIELD_SALE_INFO;
         }
 
         private readonly List<Item> inventory = Program.Player.Inventory;
@@ -23,20 +23,21 @@
 
         public override int Update()
         {
-            while (true)
+            int index = base.Update();
+            switch (index)
             {
-                int index = base.Update();
-                switch (index)
-                {
-                    case 0:
-                        Program.CurrentField = new Field_Inventory();
-                        return 0;
-                    default:
-                        if (inventory[index - 1].Equipment() == false) continue;
-                        Program.Player.Equipment();
-                        return 0;
-                }
+                case 0:
+                    Program.CurrentField = new Field_Shop();
+                    break;
+                default:
+                    Item item = inventory[index - 1];
+                    item.Sale();
+                    Program.Player.Inventory.Remove(item);
+                    Program.Player.Equipment();
+                    break;
             }
+
+            return 0;
         }
 
         protected override void ShowInfo()
@@ -48,7 +49,7 @@
             {
                 for (int i = 0; i < inventory.Count; i++)
                 {
-                    inventory[i].ShowInfo(true, false, i + 1);
+                    inventory[i].ShowInfo(true, true, i + 1);
                 }
             }
             else
@@ -56,7 +57,10 @@
                 Utils.WriteColorLine("  -  비어있음", ConsoleColor.DarkGray);
             }
 
-            Console.WriteLine("\n [0] 나가기");
+            Console.WriteLine("\n [보유 골드]");
+            Utils.WriteColorLine($" {Program.Player.Stats.Gold}G\n", ConsoleColor.Yellow);
+
+            Console.WriteLine(" [0] 나가기");
         }
     }
 }

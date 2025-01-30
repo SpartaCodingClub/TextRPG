@@ -29,15 +29,14 @@
         protected override void ShowInfo()
         {
             base.ShowInfo();
-
-            Console.WriteLine(" [아이템 목록]");
+            ShowInventoryTitle();
 
             var inventory = Program.Player.Inventory;
             if (inventory.Count > 0)
             {
                 foreach (var item in inventory)
                 {
-                    item.ShowInfo();
+                    item.ShowInfo(true, false);
                 }
             }
             else

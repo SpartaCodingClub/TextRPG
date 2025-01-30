@@ -2,6 +2,23 @@
 {
     public struct CreatureStats
     {
+        public CreatureStats(CreatureStats stats)
+        {
+            LV = stats.LV;
+            Name = stats.Name;
+
+            ATK = stats.ATK;
+            DEF = stats.DEF;
+
+            HP = stats.HP;
+            MaxHP = stats.MaxHP;
+
+            EXP = stats.EXP;
+            MaxEXP = stats.MaxEXP;
+
+            Gold = stats.Gold;
+        }
+
         public int LV;
         public string Name;
 
@@ -26,10 +43,11 @@
             stats.LV = Math.Max(stats.LV, 1);
             stats.Name ??= Program.Nickname;
             stats.MaxHP = stats.HP;
+            stats.MaxEXP = Define.MAX_EXP[stats.LV - 1];
 
             Stats = stats;
         }
 
-        public CreatureStats Stats { get; protected set; }
+        public CreatureStats Stats { get; set; }
     }
 }

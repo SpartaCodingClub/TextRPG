@@ -21,12 +21,13 @@
                     continue;
                 }
 
+                nickname = nickname.Replace(" ", string.Empty);
                 if (nickname.Length >= 2 && nickname.Length <= 8)
                 {
                     break;
                 }
 
-                Console.WriteLine($" {Define.ERROR_INPUT_MESSAGE}");
+                Console.WriteLine($" {Define.ERROR_MESSAGE_INPUT}");
             }
 
             Program.Nickname = nickname.ToUpper();

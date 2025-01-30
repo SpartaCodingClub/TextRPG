@@ -4,30 +4,21 @@
     {
         Sword,
         Shield,
-        Mage
+        Mage,
+        Common
     }
 
     internal class Player : Creature
     {
         public Player() { }
 
-        public Player(PlayerType type, CreatureStats stats) : base(stats)
-        {
-            Type = type;
-            
-            // TODO: 한줄쓰기로 바꿔야함
-            // TEST CODE
-            foreach (var item in ItemManager.Instance.ItemList)
-            {
-                Inventory.Add(item);
-            }
-        }
+        public Player(PlayerType type, CreatureStats stats) : base(stats) { Type = type; }
 
         public PlayerType Type { get; private set; }
 
         public ItemStats ItemStats { get; private set; }
 
-        public List<Item> Inventory { get; private set; } = new();
+        public List<Item> Inventory { get; private set; } = new(9);
 
         public void Equipment()
         {
@@ -35,7 +26,7 @@
 
             foreach (var item in Inventory)
             {
-                if (item.Stats.IsEquipment == false)
+                if (item.Stats.IsEquipped == false)
                 {
                     continue;
                 }

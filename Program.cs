@@ -9,6 +9,8 @@
 
         static void Main()
         {
+            Console.CursorVisible = false;
+
             while (true)
             {
                 CurrentField.Start();
