@@ -33,7 +33,7 @@
             DataManager.Instance.SaveData();
         }
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             int index = base.Update();
             Program.CurrentField = index switch

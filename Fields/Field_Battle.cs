@@ -4,6 +4,7 @@
     {
         private readonly string[] MESSAGES_EXPLORATION =
         {
+            "길을 헤매는 중",
             "낡은 지도를 살펴보는 중",
             "누군가의 시선을 느끼는 중",
             "던전을 탐색하는 중",
@@ -22,8 +23,7 @@
             "정처없이 걷는 중",
             "차가운 공기가 스며드는 중",
             "출구가 점점 멀어지는 중",
-            "함정이 작동하는 소리가 들리는 중",
-            "Chill 해지는 중"
+            "함정이 작동하는 소리가 들리는 중"
         };
 
         private readonly string[] MESSAGES_BATTLE =
@@ -41,7 +41,7 @@
             "적의 움직임을 읽는 중",
             "적의 빈틈을 노리는 중",
             "전장의 긴장감이 감도는 중",
-            "전장의 먼지가 가라않는 중",
+            "전장의 먼지가 가라앉는 중",
             "최후의 승자를 가리는 순간이 다가오는 중",
             "최후의 일격을 가하는 중",
             "최후의 한 방을 날리는 중",
@@ -53,8 +53,8 @@
         private readonly int CURSOR_HP_LEFT = 9;
         private readonly int CURSOR_HP_TOP = 9;
 
-        private readonly int MIN_DAMAGE = 20;
-        private readonly int MAX_DAMAGE = 35;
+        private readonly int DAMAGE_MIN = 20;
+        private readonly int DAMAGE_MAX = 35;
 
         private readonly double PERCENT_FAILURE = 0.4;
 
@@ -74,7 +74,7 @@
         private readonly Player player = Program.Player;
         private readonly Random random = new();
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             // 플레이어 정보 출력
             Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -88,7 +88,7 @@
             while (random.Next(0, 2) == 0);
 
             Utils.WriteColorLine("\n [!] 몬스터 발견! 곧 전투가 시작됩니다.", ConsoleColor.Red);
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             ConsoleClear();
 
             // 전투 시작
@@ -100,12 +100,12 @@
 
             // 전투 결과 (승리/패배)
             (int damage, int gold) = Result();
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             ConsoleClear();
 
             // 피해량 계산
             Damage(damage);
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
 
             // 플레이어가 사망했다면
             if (player.Stats.HP <= 0)
@@ -157,26 +157,33 @@
         private (int, int) Result()
         {
             CreatureStats stats = player.Stats;
-            if (stats.DEF < dungeon.DEF)
+            ItemStats itemStats = player.ItemStats;
+
+            // 권장 방어력 검사
+            if (stats.DEF + itemStats.DEF < dungeon.DEF)
             {
+                // 확률적으로 패배
                 if (random.NextDouble() <= PERCENT_FAILURE)
                 {
                     Utils.WriteColorLine("\n [!] 전투에서 패배했습니다! ", ConsoleColor.Red);
-                    return ((int)((player.Stats.MaxHP + player.ItemStats.MaxHP) * 0.5f), 0);
+                    return ((int)((stats.MaxHP + itemStats.MaxHP) * 0.5f), 0);
                 }
             }
 
-            Utils.WriteColorLine("\n [!] 전투에서 승리했습니다! ", ConsoleColor.DarkGreen);
-            int def = dungeon.DEF - (stats.DEF + player.ItemStats.DEF);
-            int minDamage = Math.Max(MIN_DAMAGE + def, 1);
-            int maxDamage = Math.Max(MAX_DAMAGE + def, 1) + 1;
-            int damage = random.Next(minDamage, maxDamage);
+            // 피해량 계산
+            int def = dungeon.DEF - (stats.DEF + itemStats.DEF);
+            int damageMin = Math.Max(DAMAGE_MIN + def, 1);
+            int damageMax = Math.Max(DAMAGE_MAX + def, 1) + 1;
+            int damage = random.Next(damageMin, damageMax);
 
+            // 골드 계산
             int atk = stats.ATK + player.ItemStats.ATK;
-            int minGold = (int)(dungeon.Gold * atk * 0.01f);
-            int maxGold = minGold * 2 + 1;
-            int gold = random.Next(minGold, maxGold);
+            int goldMin = (int)(dungeon.Gold * atk * 0.01f);
+            int goldMax = goldMin * 2 + 1;
+            int gold = random.Next(goldMin, goldMax);
 
+            // 콘솔 출력
+            Utils.WriteColorLine("\n [!] 전투에서 승리했습니다! ", ConsoleColor.DarkGreen);
             return (damage, dungeon.Gold + gold);
         }
 

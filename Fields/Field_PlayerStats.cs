@@ -10,7 +10,7 @@
             menu.Add("나가기");
         }
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             switch (base.Update())
             {

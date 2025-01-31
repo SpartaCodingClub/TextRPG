@@ -17,7 +17,7 @@
             DataManager.Instance.SaveData();
         }
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             switch (base.Update())
             {

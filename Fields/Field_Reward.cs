@@ -41,7 +41,7 @@
         private readonly int currentDEF;
         private readonly int gold;
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             // 플레이어 정보 출력
             Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -49,7 +49,7 @@
 
             // 리워드 (경험치, 골드 증가)
             Reward(gold);
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
 
             // 레벨이 올랐다면
             while (player.Stats.EXP >= player.Stats.MaxEXP && player.Stats.MaxEXP > 0)
@@ -57,12 +57,14 @@
                 LevelUp();
             }
 
+            // 콘솔 출력 - 레벨업
             if (player.Stats.LV > currentLV)
             {
                 Utils.WriteColorLine(" [!] LEVEL UP! 레벨이 증가했습니다.", ConsoleColor.Green);
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
             }
 
+            // 나가기 버튼 출력
             menu.Add(string.Empty);
             Console.WriteLine("\n [1] 나가기\n");
             if (base.Update() == 1)
@@ -80,15 +82,17 @@
             CreatureStats stats = player.Stats;
             bool isMaxLevel = stats.MaxEXP == 0;
 
+            // 콘솔 출력 - 경험치 증가 (최대 레벨이 아니라면)
             if (!isMaxLevel)
             {
                 Utils.WriteColor($"{dungeon.EXP}의 경험치와 ", ConsoleColor.Green);
             }
 
+            // 콘솔 출력 - 골드 증가
             Utils.WriteColorLine($"{gold:N0}G의 골드를 획득했습니다.", ConsoleColor.Green);
             (int left, int top) = Console.GetCursorPosition();
 
-            // 경험치 증가
+            // 경험치 증가 로직
             if (!isMaxLevel)
             {
                 Utils.ClearLine(CURSOR_EXP_LEFT, CURSOR_LV_TOP);
@@ -99,17 +103,17 @@
                 stats.EXP += dungeon.EXP;
                 Utils.WriteColor(stats.EXP, ConsoleColor.Green);
                 Console.Write(")");
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
             }
 
-            // 골드 증가
+            // 골드 증가 로직
             int currentGold = stats.Gold;
             while (gold > 0)
             {
-                if (gold > 20)
+                if (gold > 100)
                 {
-                    stats.Gold += 20;
-                    gold -= 20;
+                    stats.Gold += 100;
+                    gold -= 100;
                 }
                 else if (gold > 10)
                 {

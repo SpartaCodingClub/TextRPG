@@ -1,0 +1,20 @@
+2
+{"LV":10,"Name":"타락파워법사","ATK":12,"DEF":17,"HP":857,"MaxHP":80,"EXP":0,"MaxEXP":0,"Gold":45225}
+{"ATK":0,"DEF":5,"MaxHP":0}
+{"Type":1,"RequiredType":3,"IsEquipped":false,"IsPurchased":false,"Name":"수련자의 갑옷\t","Description":"수련에 도움을 주는 갑옷입니다.\t\t\t","Gold":1000}
+{"ATK":0,"DEF":9,"MaxHP":0}
+{"Type":1,"RequiredType":3,"IsEquipped":false,"IsPurchased":false,"Name":"무쇠 갑옷\t\t","Description":"무쇠로 만들어져 튼튼한 갑옷입니다.\t\t\t","Gold":1800}
+{"ATK":0,"DEF":15,"MaxHP":0}
+{"Type":1,"RequiredType":3,"IsEquipped":true,"IsPurchased":false,"Name":"스파르타의 갑옷\t","Description":"스파르타의 전사들이 사용했다는 전설의 갑옷입니다.\t","Gold":3500}
+{"ATK":0,"DEF":30,"MaxHP":0}
+{"Type":1,"RequiredType":1,"IsEquipped":false,"IsPurchased":false,"Name":"판금 갑옷\t\t","Description":"판금으로 만들어져 튼튼한 갑옷입니다.\t","Gold":20000}
+{"ATK":2,"DEF":0,"MaxHP":0}
+{"Type":0,"RequiredType":3,"IsEquipped":false,"IsPurchased":false,"Name":"낡은 검\t\t","Description":"쉽게 볼 수 있는 낡은 검입니다.\t\t\t","Gold":600}
+{"ATK":5,"DEF":0,"MaxHP":0}
+{"Type":0,"RequiredType":3,"IsEquipped":false,"IsPurchased":false,"Name":"청동 도끼\t\t","Description":"어디선가 사용됐던 거 같은 도끼입니다.\t\t","Gold":1500}
+{"ATK":7,"DEF":0,"MaxHP":0}
+{"Type":0,"RequiredType":3,"IsEquipped":false,"IsPurchased":false,"Name":"스파르타의 창\t","Description":"스파르타의 전사들이 사용했다는 전설의 창입니다.\t","Gold":2700}
+{"ATK":8,"DEF":8,"MaxHP":0}
+{"Type":0,"RequiredType":2,"IsEquipped":true,"IsPurchased":false,"Name":"강철 메이스\t\t","Description":"공수에 모두 뛰어난 메이스입니다.\t","Gold":20000}
+{"ATK":7,"DEF":7,"MaxHP":777}
+{"Type":2,"RequiredType":3,"IsEquipped":true,"IsPurchased":false,"Name":"칠 반지\t\t","Description":"Chill한 보호 주문이 깃든 반지입니다.\t\t\t","Gold":7777}

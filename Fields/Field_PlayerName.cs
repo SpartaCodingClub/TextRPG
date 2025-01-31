@@ -8,7 +8,7 @@
             info = Define.FIELD_PLAYER_NAME_INFO;
         }
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             string? nickname;
             while (true)

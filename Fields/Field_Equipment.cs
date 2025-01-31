@@ -21,11 +21,11 @@
             }
         }
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             while (true)
             {
-                int index = base.Update();
+                int index = base.Update(true);
                 switch (index)
                 {
                     case 0:

@@ -56,9 +56,9 @@
         #region Errors
         public static readonly string ERROR_MESSAGE_INPUT = "[!] 잘못된 입력입니다.";
         public static readonly string ERROR_MESSAGE_DATA = "[!] 저장된 데이터가 없습니다.";
-        public static readonly string ERROR_MESSAGE_CAPACITY = "[!] 인벤토리가 가득 찼습니다.";
         public static readonly string ERROR_MESSAGE_PURCHASE = "[!] 골드가 부족합니다.";
         public static readonly string ERROR_MESSAGE_PURCHASED = "[!] 이미 구매한 아이템입니다.";
+        public static readonly string ERROR_MESSAGE_SOLD = "[!] 이미 판매한 아이템입니다.";
         public static readonly string ERROR_MESSAGE_REQUIRED = "[!] 착용할 수 없는 아이템입니다.";
         public static readonly string ERROR_MESSAGE_FULLHP = "[!] 이미 체력이 가득 찼습니다.";
         #endregion

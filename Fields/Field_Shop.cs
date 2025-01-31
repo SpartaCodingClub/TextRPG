@@ -12,7 +12,7 @@
             menu.Add("나가기");
         }
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             switch (base.Update())
             {
@@ -48,8 +48,7 @@
                 Utils.WriteColorLine("  -  비어있음", ConsoleColor.DarkGray);
             }
 
-            Console.WriteLine("\n [보유 골드]");
-            Utils.WriteColorLine($" {Program.Player.Stats.Gold}G\n", ConsoleColor.Yellow);
+            ShowGoldInfo();
         }
     }
 }

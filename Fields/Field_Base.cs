@@ -23,12 +23,13 @@
             Console.WriteLine();
         }
 
-        public virtual int Update()
+        public virtual int Update(bool hasZero = false)
         {
             while (true)
             {
                 Utils.WriteColor(Define.FIELD_CURSOR, ConsoleColor.DarkYellow);
 
+                // 정수 검사
                 char input = Console.ReadKey(true).KeyChar;
                 if (char.IsDigit(input) == false)
                 {
@@ -36,8 +37,16 @@
                     continue;
                 }
 
+                // 인덱스 검사
                 int index = input - '0';
                 if (index > menu.Count)
+                {
+                    Console.WriteLine(Define.ERROR_MESSAGE_INPUT);
+                    continue;
+                }
+
+                // 0 허용 검사
+                if (!hasZero && index == 0)
                 {
                     Console.WriteLine(Define.ERROR_MESSAGE_INPUT);
                     continue;
@@ -86,6 +95,12 @@
             {
                 Utils.WriteColor($" (+{itemValue})", ConsoleColor.DarkGreen);
             }
+        }
+
+        protected static void ShowGoldInfo()
+        {
+            Console.WriteLine("\n [보유 골드]");
+            Utils.WriteColorLine($" {Program.Player.Stats.Gold:N0}G\n", ConsoleColor.Yellow);
         }
     }
 }

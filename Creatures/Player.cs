@@ -18,7 +18,7 @@
 
         public ItemStats ItemStats { get; private set; }
 
-        public List<Item> Inventory { get; private set; } = new(9);
+        public List<Item> Inventory { get; private set; } = new(ItemManager.Instance.ItemList.Count);
 
         public void Equipment()
         {

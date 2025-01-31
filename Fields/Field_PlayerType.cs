@@ -13,7 +13,7 @@
             }
         }
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             int index = base.Update() - 1;
 

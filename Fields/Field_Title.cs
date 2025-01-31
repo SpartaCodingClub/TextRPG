@@ -11,7 +11,7 @@
             menu.Add("이어 하기");
         }
 
-        public override int Update()
+        public override int Update(bool hasZero = false)
         {
             while (true)
             {

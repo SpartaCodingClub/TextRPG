@@ -5,7 +5,7 @@ namespace TextRPG
 {
     internal class DataManager
     {
-        private readonly string FILE_NAME = "test";
+        private readonly string FILE_NAME = "data";
 
         public static readonly DataManager Instance = new();
 
@@ -13,16 +13,20 @@ namespace TextRPG
         {
             Player player = Program.Player;
             FileStream fileStream = new($"{FILE_NAME}.json", FileMode.Create);
-
             StringBuilder stringBuilder = new();
+
+            // 플레이어 정보 저장하기
             stringBuilder.Append($"{JsonConvert.SerializeObject(player.Type)}\n");
             stringBuilder.Append($"{JsonConvert.SerializeObject(player.Stats)}\n");
+
+            // 아이템 정보 저장하기
             foreach (var item in player.Inventory)
             {
                 stringBuilder.Append($"{JsonConvert.SerializeObject(item.Stats)}\n");
                 stringBuilder.Append($"{JsonConvert.SerializeObject(item.Status)}\n");
             }
 
+            // data.json 파일에 데이터 쓰기
             string jsonData = stringBuilder.ToString();
             byte[] data = Encoding.UTF8.GetBytes(jsonData);
             fileStream.Write(data, 0, data.Length);
@@ -31,6 +35,7 @@ namespace TextRPG
 
         public bool LoadData()
         {
+            // 저장된 데이터가 있는지 확인
             FileStream fileStream;
             try
             {
@@ -42,6 +47,7 @@ namespace TextRPG
                 return false;
             }
 
+            // data.json 파일의 데이터 읽어오기
             byte[] data = new byte[fileStream.Length];
             fileStream.Read(data, 0, data.Length);
             fileStream.Close();
@@ -66,6 +72,7 @@ namespace TextRPG
                 player.Inventory.Add(item);
             }
 
+            // 상점 아이템 정보 동기화
             foreach (var playerItem in player.Inventory)
             {
                 foreach (var item in ItemManager.Instance.ItemList)
@@ -75,14 +82,17 @@ namespace TextRPG
                         continue;
                     }
 
-                    // 플레이어가 보유한 아이템이라면 상점에서 판매 중인 해당 아이템을 구매 완료로 변경하기
+                    // 상점 아이템 중 플레이어가 보유한 아이템은 판매된 아이템으로 변경하기
                     ItemStatus newStatus = item.Status;
                     newStatus.IsPurchased = true;
                     item.Status = newStatus;
                 }
             }
 
+            // 착용 중인 아이템 스탯 반영하기
             player.Equipment();
+
+            // 체력이 증가하는 아이템을 착용하고 저장했을 경우, 체력이 중복으로 증가하는 것을 방지하기
             player.Stats = stats;
 
             return true;
